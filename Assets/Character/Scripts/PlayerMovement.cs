@@ -1,0 +1,30 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PlayerMovement : MonoBehaviour
+{
+    private float movementSpeed = 2f;
+    private Rigidbody2D rb;
+    private Vector2 movementDirection;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+
+    void Update()
+    {
+        movementDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+    }
+
+    private void FixedUpdate()
+    {
+        rb.linearVelocity = movementDirection * movementSpeed;
+    }
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        movementDirection = context.ReadValue<Vector2>();
+    }
+}
