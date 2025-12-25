@@ -6,15 +6,21 @@ public class PlayerChanger : MonoBehaviour
 
     [SerializeField] GameObject changer;
     [SerializeField] GameObject _changed;
+    private GameObject changerHolder;
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-
+            
             changer.SetActive(false);
             _changed.SetActive(true);
+
+            changerHolder = changer.gameObject;
+            changer = _changed.gameObject;
+            _changed = changerHolder.gameObject;
+
             
             Debug.Log("Pressed R");
         }
