@@ -6,7 +6,7 @@ public class Player3DMov : MonoBehaviour
     private CharacterController controller;
 
     [Header("Movement Settings")]
-    [SerializeField] private float walkSpeed = 2f;
+    [SerializeField] private float walkSpeed = 1f;
 
     [Header("Input")]
     private float moveInput;
