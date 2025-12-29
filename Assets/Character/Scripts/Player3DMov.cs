@@ -52,13 +52,11 @@ public class Player3DMov : MonoBehaviour
         }
         return verticalVelocity;
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         controller = GetComponent<CharacterController>();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         InputManagement();
