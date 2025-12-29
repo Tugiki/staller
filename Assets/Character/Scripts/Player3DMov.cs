@@ -8,6 +8,11 @@ public class Player3DMov : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 1f;
 
+
+    [SerializeField] private float gravity = 9.81f;
+
+    private float verticalVelocity;
+
     [Header("Input")]
     private float moveInput;
     private float turnInput;
@@ -24,7 +29,7 @@ public class Player3DMov : MonoBehaviour
     {
         Vector3 move = new Vector3(turnInput, 0, moveInput);
 
-        move.y = 0;
+        move.y = VerticalForceCalculation();
 
         move *= walkSpeed;
 
@@ -36,6 +41,17 @@ public class Player3DMov : MonoBehaviour
         GroundMovement();
     }
 
+    private float VerticalForceCalculation()
+    {
+        if (controller.isGrounded)
+        {
+            verticalVelocity = -1f; // Small negative value to keep the player grounded
+        } else
+        {
+            verticalVelocity -= gravity * Time.deltaTime;
+        }
+        return verticalVelocity;
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
