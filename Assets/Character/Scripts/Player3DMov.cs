@@ -1,12 +1,15 @@
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Player3DMov : MonoBehaviour
 {
     [Header("References")]
     private CharacterController controller;
+    [SerializeField] private Transform camera;
 
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 1f;
+    [SerializeField] private float turningSpeed = 4f;
 
 
     [SerializeField] private float gravity = 9.81f;
@@ -28,6 +31,7 @@ public class Player3DMov : MonoBehaviour
     private void GroundMovement()
     {
         Vector3 move = new Vector3(turnInput, 0, moveInput);
+        move = transform.TransformDirection(move);
 
         move.y = VerticalForceCalculation();
 
@@ -39,6 +43,7 @@ public class Player3DMov : MonoBehaviour
     private void Movement()
     {
         GroundMovement();
+        Turn();
     }
 
     private float VerticalForceCalculation()
@@ -51,6 +56,19 @@ public class Player3DMov : MonoBehaviour
             verticalVelocity -= gravity * Time.deltaTime;
         }
         return verticalVelocity;
+    }
+
+    private void Turn()
+    {
+
+        if(Mathf.Abs(turnInput) > 0 || Mathf.Abs(moveInput) > 0)
+        {
+            Vector3 currentLookDirection = camera.forward;
+            currentLookDirection.y = 0;
+
+            
+        }
+        
     }
     private void Start()
     {
