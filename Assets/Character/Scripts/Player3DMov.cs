@@ -66,7 +66,9 @@ public class Player3DMov : MonoBehaviour
             Vector3 currentLookDirection = camera.forward;
             currentLookDirection.y = 0;
 
-            
+            Quaternion targetRotation = Quaternion.LookRotation(currentLookDirection);
+            transform.rotation = targetRotation;
+             
         }
         
     }
