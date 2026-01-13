@@ -8,11 +8,13 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 1f;
-
+    [SerializeField] private float jumpHeight = 0.1f;
 
     [SerializeField] private float gravity = 9.81f;
 
     private float verticalVelocity;
+    private Animator animator;
+
 
     [Header("Input")]
     private float moveInput;
@@ -40,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     private void Movement()
     {
         GroundMovement();
+        Player2DAnimation();
     }
 
     private float VerticalForceCalculation()
@@ -47,6 +50,10 @@ public class PlayerMovement : MonoBehaviour
         if (controller.isGrounded)
         {
             verticalVelocity = -1f; // Small negative value to keep the player grounded
+            if (Input.GetButtonDown("Jump"))
+            {
+                verticalVelocity = Mathf.Sqrt(jumpHeight * 2 * gravity);
+            }
         }
         else
         {
@@ -55,9 +62,26 @@ public class PlayerMovement : MonoBehaviour
         return verticalVelocity;
     }
 
+    private void Player2DAnimation()
+    {
+        
+        animator.SetBool("isWalking", true);
+        
+        if (moveInput == 0 && turnInput == 0)
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetFloat("LastInputX", turnInput);
+            animator.SetFloat("LastInputY", moveInput);
+        }
+
+        animator.SetFloat("InputX", turnInput);
+        animator.SetFloat("InputY", moveInput);
+    }
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()

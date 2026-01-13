@@ -10,6 +10,7 @@ public class Player3DMov : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 1f;
     [SerializeField] private float turningSpeed = 4f;
+    [SerializeField] private float jumpHeight = 0.1f;
 
 
     [SerializeField] private float gravity = 9.81f;
@@ -51,6 +52,12 @@ public class Player3DMov : MonoBehaviour
         if (controller.isGrounded)
         {
             verticalVelocity = -1f; // Small negative value to keep the player grounded
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                verticalVelocity = Mathf.Sqrt(jumpHeight * 2 * gravity);
+            }
+
         } else
         {
             verticalVelocity -= gravity * Time.deltaTime;
