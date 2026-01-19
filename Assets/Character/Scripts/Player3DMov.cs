@@ -5,7 +5,8 @@ public class Player3DMov : MonoBehaviour
 {
     [Header("References")]
     private CharacterController controller;
-    [SerializeField] private Transform camera;
+    [SerializeField] private Transform   camera;
+
 
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 1f;
@@ -16,10 +17,12 @@ public class Player3DMov : MonoBehaviour
     [SerializeField] private float gravity = 9.81f;
 
     private float verticalVelocity;
+    private Animator animator;
 
     [Header("Input")]
     private float moveInput;
     private float turnInput;
+
 
     private void InputManagement()
     {
@@ -45,6 +48,7 @@ public class Player3DMov : MonoBehaviour
     {
         GroundMovement();
         Turn();
+        Player2DAnimation();
     }
 
     private float VerticalForceCalculation()
@@ -64,11 +68,25 @@ public class Player3DMov : MonoBehaviour
         }
         return verticalVelocity;
     }
+    private void Player2DAnimation()
+    {
 
+        animator.SetBool("isWalking", true);
+
+        if (moveInput == 0 && turnInput == 0)
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetFloat("LastInputX", 0);
+            animator.SetFloat("LastInputY", 1);
+        }
+
+        animator.SetFloat("InputX", turnInput);
+        animator.SetFloat("InputY", -(moveInput));
+    }
     private void Turn()
     {
 
-        if(Mathf.Abs(turnInput) > 0 || Mathf.Abs(moveInput) > 0)
+        if(true)
         {
             Vector3 currentLookDirection = camera.forward;
             currentLookDirection.y = 0;
@@ -82,6 +100,7 @@ public class Player3DMov : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()

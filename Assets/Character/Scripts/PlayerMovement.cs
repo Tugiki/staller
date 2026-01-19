@@ -70,12 +70,12 @@ public class PlayerMovement : MonoBehaviour
         if (moveInput == 0 && turnInput == 0)
         {
             animator.SetBool("isWalking", false);
-            animator.SetFloat("LastInputX", turnInput);
-            animator.SetFloat("LastInputY", moveInput);
+            animator.SetFloat("LastInputX", 0 );
+            animator.SetFloat("LastInputY", 1 );
         }
-
-        animator.SetFloat("InputX", turnInput);
-        animator.SetFloat("InputY", moveInput);
+        
+        animator.SetFloat("InputX", turnInput); 
+        animator.SetFloat("InputY", moveInput); 
     }
 
     private void Start()
